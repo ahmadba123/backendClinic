@@ -8,5 +8,7 @@ router.post('/', controller.add)
 // router.post('/signin', controller.signin)
 router.put('/:id', controller.update)
 router.delete("/:id", controller.delete);
+// router.delete("/:id", controller.deletee);
+
 
 module.exports = router;

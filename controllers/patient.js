@@ -1,5 +1,6 @@
 const patient = require('../models/patient');
 const bcrypt = require('bcryptjs');
+const visit = require('../models/visit')
 class Controller {
 
     // get all patients
@@ -26,13 +27,21 @@ class Controller {
     }
     //delete
     delete(req, res, next) {
-        patient.findOneAndDelete({_id: req.params.id }, function (err, docs) {
+        let {id} = req.params.id;
+        patient.findByIdAndDelete(req.params.id , function (err, docs) {
             if (err){
                 res.status(404).json(err)
+                // console.log("Deleted price : ",err);
+
             }
             else{
+                // lab.findOneAndDelete(req.params.id)
+                visit.remove({patient: req.params.id}).then((err, response) => {
+                    if (err) console.log("delete error:", err)
+                    else console.log("delete succeeded:", response)
+                })
                 res.status(200).json("deleted successfully ")
-                console.log("Deleted User : ", docs);
+                console.log("Deleted price : ", docs);
             }
         });
     }

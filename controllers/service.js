@@ -2,7 +2,7 @@ const service = require('../models/service');
 class Controller {
 
     // get all patients
-    getAll(req, res, next) {
+  async  getAll(req, res, next) {
         service.find((err, response) => {
             if (err) return next(err);
             res.status(200).send({ success: true, response });
@@ -29,6 +29,22 @@ class Controller {
             }
         });
     }
+    //del
+    // deletee(req, res, next) {
+
+    //     service.findById(req.params.service, function(err, lab) {
+    //         if (err)
+    //             return next(new restify.InternalError(err));
+    //         else if (!service)
+    //             return next(new restify.ResourceNotFoundError('The resource you requested could not be found.'));
+    //         // find and remove all associated sweepstakes
+    //         // Sweepstakes.find({lab_id: lab._id}).remove();
+    //         // find and remove all submissions
+    //         lab.find({id: lab._id}).remove();
+    //         lab.remove();
+    //         res.send({id: req.params.id});
+    //     });
+    // }
     //update
     async update(req, res, next) {
         let { id } = req.params;

@@ -11,6 +11,7 @@ class Controller {
     try {
         let alldoctor = await doctor.find();
         let countdoctor = await doctor.count({});
+
         
         res.status(200).json({doctor:alldoctor,countdoctor});
     } catch (err) {

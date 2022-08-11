@@ -5,14 +5,16 @@ const visitSchema = new mongoose.Schema({
     description: {
         type: String,
         required: true,
-        unique:true,
 
     },
     symptoms: {
         type: String,
         required: true,
-        unique:true,
 
+    },
+    date:{
+      type:Date,
+      required:true,
     },
     price: {
         type: Schema.Types.ObjectId,
@@ -30,9 +32,9 @@ const visitSchema = new mongoose.Schema({
         ref: "patient",
         // required:true
       },
-      lab: {
+      service: {
         type: Schema.Types.ObjectId,
-        ref: "lab",
+        ref: "service",
         // required:true
       },
       accounting: {
@@ -49,7 +51,7 @@ const visitSchema = new mongoose.Schema({
     versionKey: false,
 });
 visitSchema.pre(["find", "findOne"], function () {
-    this.populate(["doctor","patient","lab","accounting"]);
+    this.populate(["doctor","patient","service","price","accounting"]);
   });
 
 module.exports = mongoose.model("visit", visitSchema);

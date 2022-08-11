@@ -2,25 +2,29 @@ const mongoose = require('mongoose');
 const { Schema, model } = require("mongoose");
 
 const scheduleSchema = new mongoose.Schema({
-    day: {
+    title: {
         type: String,
         required: true,
         // unique:true,
 
     },
-    from: {
-        type: String,
+    start: {
+        type: Date,
         required: true,
         // unique:true,
 
     },
-    to: {
-        type: String,
+    end: {
+        type: Date,
         required: true,
         // unique:true,
 
     },
-  
+    doctor: {
+        type: Schema.Types.ObjectId,
+        ref: "doctor",
+        // required:true
+      },
    
  
   
@@ -29,6 +33,8 @@ const scheduleSchema = new mongoose.Schema({
     collection: 'schedule',
     versionKey: false,
 });
-
+scheduleSchema.pre(["find", "findOne"], function () {
+    this.populate(["doctor"]);
+  });
 
 module.exports = mongoose.model("schedule", scheduleSchema);
