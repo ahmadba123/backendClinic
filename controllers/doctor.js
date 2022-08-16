@@ -1,7 +1,7 @@
 const doctor = require('../models/doctor');
 class Controller {
 
-    // get all patients
+    // get all doctor
    async getAll(req, res, next) {
     //     doctor.find((err, response) => {
     //         if (err) return next(err);

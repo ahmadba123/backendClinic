@@ -4,12 +4,8 @@ const priceSchema = new mongoose.Schema({
     amount: {
         type: Number,
         required: true,
-        unique: true,
-
+        // unique: true,
     },
- 
-  
-   
 }, {
     collection: 'price',
     versionKey: false,

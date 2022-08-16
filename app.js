@@ -39,6 +39,17 @@ app.use(cors())
 
 
 
+mongoose.connect(process.env.URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+}).then(() => {
+  console.log("connection is success");
+}).catch((error) => console.log(error));
+
+
+
+
+
 
 
 
@@ -57,16 +68,6 @@ app.use("/api/service", service);
 
 
 
-
-
-
-
-mongoose.connect(process.env.URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}).then(() => {
-  console.log("connection is success");
-}).catch((error) => console.log(error));
 
 
 

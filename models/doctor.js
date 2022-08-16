@@ -5,13 +5,13 @@ const doctorSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-        unique:true,
+        // unique:true,
 
     },
     phone: {
         type: Number,
         required: true,
-        unique:true,
+        // unique:true,
 
     },
     dob: {
@@ -22,7 +22,7 @@ const doctorSchema = new mongoose.Schema({
     domain: {
         type: Schema.Types.ObjectId,
         ref: "domain",
-        required:true
+        // required:true
       },
    
  

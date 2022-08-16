@@ -5,7 +5,7 @@ const serviceSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-        unique: true,
+        // unique: true,
 
     },
     price: {
@@ -16,8 +16,8 @@ const serviceSchema = new mongoose.Schema({
     },
     description: {
         type: String,
-
     },
+
     lab: {
         type: Schema.Types.ObjectId,
         ref: "lab",

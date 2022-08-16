@@ -5,7 +5,7 @@ const labSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-        unique:true,
+        // unique:true,
 
     },
     address: {
@@ -17,7 +17,7 @@ const labSchema = new mongoose.Schema({
     phone: {
         type: String,
         required: true,
-        unique:true,
+        // unique:true,
 
     },
   
