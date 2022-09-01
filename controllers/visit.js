@@ -1,5 +1,23 @@
 const visit = require('../models/visit');
+function getFirstDayOfMonth() {
+    const now = new Date();
+    return new Date(now.getFullYear(), now.getMonth(), 1);
+  }
+  
+  
+  function getLastWeeksDate() {
+    const now = new Date();
+  
+    return new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7);
+  }
+  
+  const firstDayCurrentMonth = getFirstDayOfMonth();
+  const lastWeek = getLastWeeksDate();
+  
+  console.log("firstDayCurrentMonth:", firstDayCurrentMonth);
+  console.log("week ago:", lastWeek)
 class Controller {
+    
 
     // get all visit
     async getAll(req, res, next) {
@@ -30,6 +48,99 @@ class Controller {
                 {
                     '$match': {
                         "date": { $gte: new Date(date.setHours(0, 0, 0, 0)), $lt: new Date() }
+                    }
+                },
+                {
+                    '$lookup': {
+                        'from': 'price',
+                        'localField': 'price',
+                        'foreignField': '_id',
+                        'as': 'prices'
+                    }
+                },
+                {
+                    '$set': {
+                        'key': 1
+                    }
+                },
+                {
+                    '$unwind': {
+                        'path': '$prices'
+                    }
+                },
+                {
+                    '$group': {
+                        '_id': '$key',
+                        'totalAmount': {
+                            '$sum': '$prices.amount'
+                        }
+                    }
+                }
+            ],
+            (err, response) => {
+                if (err) return next(err);
+                res.status(200).send({
+                    success: true,
+                    message: "Get Records Successfully",
+                    response,
+                });
+            }
+        );
+    }
+
+    getWeeklyRecord(req, res, next) {
+        let date = new Date()
+        visit.aggregate(
+            [
+                {
+                    '$match': {
+                        "date": { $gte: getLastWeeksDate(), $lt: date }
+                    }
+                },
+                {
+                    '$lookup': {
+                        'from': 'price',
+                        'localField': 'price',
+                        'foreignField': '_id',
+                        'as': 'prices'
+                    }
+                },
+                {
+                    '$set': {
+                        'key': 1
+                    }
+                },
+                {
+                    '$unwind': {
+                        'path': '$prices'
+                    }
+                },
+                {
+                    '$group': {
+                        '_id': '$key',
+                        'totalAmount': {
+                            '$sum': '$prices.amount'
+                        }
+                    }
+                }
+            ],
+            (err, response) => {
+                if (err) return next(err);
+                res.status(200).send({
+                    success: true,
+                    message: "Get Records Successfully",
+                    response,
+                });
+            }
+        );
+    }
+    getMonthlyRecord(req, res, next) {
+        let date = new Date()
+        visit.aggregate(
+            [
+                {
+                    '$match': {
+                        "date": { $gte: getFirstDayOfMonth(), $lt: date }
                     }
                 },
                 {
@@ -147,6 +258,97 @@ class Controller {
                         "date": { $gte: new Date(date.setHours(0, 0, 0, 0)), $lt: new Date() }
                     }
                 },
+                {
+                    '$lookup': {
+                        'from': 'service',
+                        'localField': 'service',
+                        'foreignField': '_id',
+                        'as': 'services'
+                    }
+                },
+                {
+                    '$set': {
+                        'key': 1
+                    }
+                },
+                {
+                    '$unwind': {
+                        'path': '$services'
+                    }
+                },
+                {
+                    '$group': {
+                        '_id': '$key',
+                        'totalAmount': {
+                            '$sum': '$services.price'
+                        }
+                    }
+                }
+            ],
+            (err, response) => {
+                if (err) return next(err);
+                res.status(200).send({
+                    success: true,
+                    message: "Get Records Successfully",
+                    response,
+                });
+            }
+        );
+    }
+
+    getWeeklyRecordLab(req, res, next) {
+        let date = new Date()
+        visit.aggregate(
+            [
+                {
+                    '$match': {
+                        "date": { $gte: getLastWeeksDate(), $lt: date }
+                }},
+                {
+                    '$lookup': {
+                        'from': 'service',
+                        'localField': 'service',
+                        'foreignField': '_id',
+                        'as': 'services'
+                    }
+                },
+                {
+                    '$set': {
+                        'key': 1
+                    }
+                },
+                {
+                    '$unwind': {
+                        'path': '$services'
+                    }
+                },
+                {
+                    '$group': {
+                        '_id': '$key',
+                        'totalAmount': {
+                            '$sum': '$services.price'
+                        }
+                    }
+                }
+            ],
+            (err, response) => {
+                if (err) return next(err);
+                res.status(200).send({
+                    success: true,
+                    message: "Get Records Successfully",
+                    response,
+                });
+            }
+        );
+    }
+    getMonthlyRecordLab(req, res, next) {
+        let date = new Date()
+        visit.aggregate(
+            [
+                {
+                    '$match': {
+                        "date": { $gte: getFirstDayOfMonth(), $lt: date }
+                    }},
                 {
                     '$lookup': {
                         'from': 'service',
