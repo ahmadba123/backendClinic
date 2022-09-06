@@ -53,9 +53,10 @@ mongoose.connect(process.env.URI, {
 
 
 
-app.use('/', indexRouter);
+// app.use('/', indexRouter);
 // app.use('/users', usersRouter);
-app.use("/api/patient", patient);
+// app.use("/api/patient", patient);
+app.use('/', patient);
 app.use("/api/price", price);
 app.use("/api/accounting", accounting);
 app.use("/api/domain", domain);
